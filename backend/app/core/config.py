@@ -2,20 +2,30 @@ from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
 class Settings(BaseSettings):
-
+    
+    # App
     APP_NAME: str
     APP_VERSION: str
     ENVIRONMENT: str
 
+    # Server
     HOST: str
     PORT: int
 
-    DATABASE_URL: str
+     # Database
+    DB_HOST: str
+    DB_PORT: int
+    DB_NAME: str
+    DB_USER: str
+    DB_PASSWORD: str
+    DB_SSL_MODE: str
 
+     # Authentication
     SECRET_KEY: str
     ALGORITHM: str
     ACCESS_TOKEN_EXPIRE_MINUTES: int
 
+    # AI
     GOOGLE_API_KEY: str = ""
 
     model_config = SettingsConfigDict(
