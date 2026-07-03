@@ -8,6 +8,8 @@ from app.schemas.user import (
     UserResponse,
 )
 from app.services.auth_service import AuthService
+from app.core.security import get_current_user
+from app.exceptions.auth_exception import InvalidCredentialsException
 
 router = APIRouter(
     prefix="/auth",
@@ -24,18 +26,10 @@ def register(
     request: UserRegisterRequest,
     db: Session = Depends(get_db),
 ):
-
-    try:
-        return auth_service.register_user(
-            db,
-            request,
-        )
-
-    except ValueError as e:
-        raise HTTPException(
-            status_code=400,
-            detail=str(e),
-        )
+    return auth_service.register_user(
+        db,
+        request,
+    )
     
 @router.post("/login")
 def login(
@@ -43,7 +37,6 @@ def login(
     db: Session = Depends(get_db),
 ):
 
-    try:
         token = auth_service.login_user(
             db,
             request,
@@ -54,8 +47,12 @@ def login(
             "token_type": "bearer",
         }
 
-    except ValueError as e:
-        raise HTTPException(
-            status_code=401,
-            detail=str(e),
-        )
+    
+@router.get(
+    "/me",
+    response_model=UserResponse,
+)
+def get_profile(
+    current_user=Depends(get_current_user),
+):
+    return current_user

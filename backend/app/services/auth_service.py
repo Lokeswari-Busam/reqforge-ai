@@ -11,6 +11,8 @@ from app.utils.security import (
     hash_password,
     verify_password,
 )
+from app.exceptions.user_exception import UserAlreadyExistsException
+from app.exceptions.auth_exception import InvalidCredentialsException
 
 
 class AuthService:
@@ -30,9 +32,7 @@ class AuthService:
         )
 
         if existing_user:
-            raise ValueError(
-                "Email already registered."
-            )
+            raise UserAlreadyExistsException()
 
         user = User(
             first_name=request.first_name,
@@ -60,17 +60,13 @@ class AuthService:
         )
 
         if not user:
-            raise ValueError(
-                "Invalid email or password."
-            )
+            raise InvalidCredentialsException()
 
         if not verify_password(
             request.password,
             user.password_hash,
         ):
-            raise ValueError(
-                "Invalid email or password."
-            )
+            raise InvalidCredentialsException()
 
         return create_access_token(
             {
