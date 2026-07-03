@@ -1,15 +1,18 @@
 from fastapi import FastAPI
 
+from app.api.v1.router import api_router
+from app.core.config import settings
+
 app = FastAPI(
-    title="ReqForge AI",
-    description="AI-Powered Software Requirements & Solution Generator",
-    version="1.0.0",
+    title=settings.APP_NAME,
+    version=settings.APP_VERSION,
 )
+
+app.include_router(api_router)
 
 
 @app.get("/")
 def root():
     return {
-        "message": "Welcome to ReqForge AI API",
-        "status": "running"
+        "message": "Welcome to ReqForge AI"
     }

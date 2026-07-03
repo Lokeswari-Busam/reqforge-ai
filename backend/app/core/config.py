@@ -28,6 +28,13 @@ class Settings(BaseSettings):
     # AI
     GOOGLE_API_KEY: str = ""
 
+    @property
+    def DATABASE_URL(self) -> str:
+        return (
+            f"postgresql://{self.DB_USER}:{self.DB_PASSWORD}"
+            f"@{self.DB_HOST}:{self.DB_PORT}/{self.DB_NAME}"
+            f"?sslmode={self.DB_SSL_MODE}"
+        )
     model_config = SettingsConfigDict(
         env_file=".env",
         extra="ignore"
