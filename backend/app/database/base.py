@@ -8,4 +8,3 @@ class Base(DeclarativeBase):
     will inherit from this class.
     """
     pass
-
