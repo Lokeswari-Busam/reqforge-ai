@@ -30,3 +30,9 @@ class DocumentType(str, Enum):
     SRS = "SRS"
     USER_STORY = "USER_STORY"
     API_SPEC = "API_SPEC"
+
+class DocumentStatus(str, Enum):
+    UPLOADED = "UPLOADED"
+    PROCESSING = "PROCESSING"
+    PROCESSED = "PROCESSED"
+    FAILED = "FAILED"
