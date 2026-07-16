@@ -20,9 +20,10 @@ class UserStatus(str, Enum):
 
 
 class RequirementStatus(str, Enum):
-    DRAFT = "DRAFT"
     GENERATED = "GENERATED"
+    REVIEWED = "REVIEWED"
     APPROVED = "APPROVED"
+    REJECTED = "REJECTED"
 
 
 class DocumentType(str, Enum):
@@ -36,3 +37,18 @@ class DocumentStatus(str, Enum):
     PROCESSING = "PROCESSING"
     PROCESSED = "PROCESSED"
     FAILED = "FAILED"
+
+class RequirementPriority(str, Enum):
+
+    LOW = "LOW"
+    MEDIUM = "MEDIUM"
+    HIGH = "HIGH"
+    CRITICAL = "CRITICAL"
+
+
+class RequirementType(str, Enum):
+
+    FUNCTIONAL = "FUNCTIONAL"
+    NON_FUNCTIONAL = "NON_FUNCTIONAL"
+    BUSINESS = "BUSINESS"
+    TECHNICAL = "TECHNICAL"

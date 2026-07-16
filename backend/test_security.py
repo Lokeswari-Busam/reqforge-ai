@@ -1,22 +1,21 @@
-from app.database.session import SessionLocal
-from app.schemas.user import UserRegisterRequest
-from app.services.auth_service import AuthService
+from app.AI.services.document_processor import DocumentProcessor
+from app.AI.processors.text_cleaner import TextCleaner
+from app.AI.processors.text_chunker import TextChunker
 
-db = SessionLocal()
+processor = DocumentProcessor()
+cleaner = TextCleaner()
+chunker = TextChunker()
 
-service = AuthService()
-
-user = service.register_user(
-    db,
-    UserRegisterRequest(
-        first_name="Lokeshwari",
-        last_name="Busam",
-        email="lokeshwari@test.com",
-        password="Password@123",
-    ),
+text = processor.extract_text(
+    "uploads/requirements_employee_onboarding_2026-07-07_12-17-01.pdf"
 )
 
-print(user.uuid)
-print(user.email)
+clean_text = cleaner.clean(text)
 
-db.close()
+chunks = chunker.chunk_text(clean_text)
+
+print(f"Total Chunks: {len(chunks)}")
+
+for index, chunk in enumerate(chunks, start=1):
+    print(f"\n===== Chunk {index} =====\n")
+    print(chunk)
